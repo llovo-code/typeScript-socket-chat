@@ -23,20 +23,20 @@
 
 
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <input type="text" id="txtMensaje" class="form-control">
-            </div>
-            <div class="col">
-                <button class="btn btn-primary" id="btnSend">
-                    Enviar
-                </button>
-            </div>
-        </div>
-    </div>
 
+        <form action="chat.html">
+
+            <input type="text" name="name" placeholder="alias" required>
+            <input type="text" name="rooms" placeholder="room" required>
+
+            <button type="submit">
+                Ingresar
+            </button>
+        </form>
+    </div>
+    <!-- 
     <script src="./socket.io/socket.io.js"></script>
-    <script src="./js/socket_client.js"></script>
+    <script src="./js/socket_client.js"></script> -->
 </body>
 
 </html>

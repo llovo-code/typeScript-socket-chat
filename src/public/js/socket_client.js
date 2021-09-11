@@ -1,43 +1,61 @@
 //references to html
 
-const lblOnline = document.querySelector('#lbl_Online');
-const lblOfline = document.querySelector('#lbl_Ofline');
+const socket = io();
 
-const txtMensaje = document.querySelector('#txtMensaje');
-const btnSend = document.querySelector('#btnSend');
+let params = new URLSearchParams(window.location.search);
 
-const socketClient = io();
+if (!params.has('name') || !params.has('rooms')) {
+    window.location = 'index.html';
+    throw new Error('El nombre es necesario');
+}
 
-socketClient.on('connect', () => {
-    //console.log(`connected to server`);
+let data = {
+    name: params.get('name'),
+    rooms: params.get('rooms')
+}
 
-    lblOfline.style.display = 'none';
-    lblOnline.style.display = ''
+socket.on('connect', function() {
+    console.log('Conectado al servidor');
+    socket.emit('entryChat', data, function(serverResponse) {
+        console.log(serverResponse);
+    });
+});
+
+// escuchar
+socket.on('disconnect', function() {
+    console.log('Perdimos conexión con el servidor');
+});
+
+// Enviar información
+// socket.emit('enviarMensaje', {
+//     usuario: 'Fernando',
+//     mensaje: 'Hola Mundo'
+// }, function(resp) {
+//     console.log('respuesta server: ', resp);
+// });
+
+// Escuchar información
+socket.on('sendMessage', function(mensaje) {
+    console.log('Servidor:', mensaje);
+});
+
+socket.on('listPerson', (data) => {
+    console.log(data);
 });
 
 
-socketClient.on('disconnect', () => {
-    //console.log(`disconnet from server `);
+socket.on('createMessage', (message) => {
+    console.log(message);
+})
 
 
-    lblOfline.style.display = '';
-    lblOnline.style.display = 'none'
-});
 
 
-socketClient.on('enviar-mensaje', (payload) => {
-    console.log(``, payload);
-});
 
 
-btnSend.addEventListener('click', () => {
-    const sms = txtMensaje.value;
 
-    const payload = {
-        id: 'abc123',
-        sms,
-        date: new Date().getDate()
-    };
-    ///console.log(`${sms}`);
-    socketClient.emit('enviar-mensaje', payload);
+////private message 
+
+socket.on('MessagePrivate', function(message) {
+    console.log(`private message`, message);
 })
