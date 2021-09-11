@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 class User {
     constructor() {
-        this.people = [];
+        this.people = Array();
         this.people = [];
     }
     addPerson(id, name, rooms) {

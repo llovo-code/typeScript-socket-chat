@@ -3,20 +3,20 @@
 export class User{
 
 
-    public people =[] ;
+    public people =Array() ;
     constructor(){
         this.people=[];
     }
 
 
-    addPerson(id,name,rooms){
+    addPerson(id:string,name:string,rooms:string){
 
-        let person = { id,name ,rooms};
+        let person= { id,name ,rooms};
         this.people.push(person);
         return this.people;
     }
 
-    getPersonById(id:Number){
+    getPersonById(id:string){
 
         let person = this.people.filter(p => {return p.id ===id})[0];
         return person
@@ -26,7 +26,7 @@ export class User{
         return this.people;
     }
 
-    getPeopleByRooms(rooms:any){
+    getPeopleByRooms(rooms:string){
         
 
             let usersRooms = this.people.filter(p=>{
@@ -38,7 +38,7 @@ export class User{
     }
 
 
-    removePerson(id){
+    removePerson(id:string){
 
         let person = this.getPersonById(id); 
         this.people =  this.people.filter( p => {return p.id != id});

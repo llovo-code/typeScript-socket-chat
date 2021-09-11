@@ -24,8 +24,8 @@ ioserver.on('connection',(client:Socket)=>{
         client.broadcast.to(data.rooms).emit('listPerson',userdb.getPeopleByRooms(data.rooms));
         callback(userdb.getPeopleByRooms(data.sala));
 
-    });
-
+    }); 
+ 
     client.on('disconnect',()=>{
 
         let deletePerson = userdb.removePerson(client.id);
